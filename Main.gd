@@ -1,7 +1,10 @@
 extends Node
 
 @export var mob_scene: PackedScene
+#@export var ammo_scene: PackedScene
+
 var score
+var kill_num
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -9,6 +12,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+		
 
 func gmer_over():
 	$ScoreTimer.stop()
@@ -19,10 +23,12 @@ func gmer_over():
 	
 func new_game():
 	score = 0
+	kill_num = 0
 	$Player.start($StartPosition.position)
 	$Player/AnimatedSprite2D.flip_v = false
 	$StartTimer.start()
 	$HUD.update_score(score)
+	$HUD.update_killnum(kill_num)
 	$HUD.show_message("Get Ready")
 	$Music.play()
 
@@ -54,3 +60,20 @@ func _on_score_timer_timeout():
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	
+	
+
+
+func _on_child_entered_tree(node):
+	if node.name == "Ammo":
+		var ammo = $Ammo
+		ammo.hit_enemy.connect(_on_ammo_hit_enemy)
+		
+
+func _on_ammo_hit_enemy():
+		kill_num += 1
+		$HUD.update_killnum(kill_num)
+
+		
+		
+		

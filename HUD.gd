@@ -28,7 +28,10 @@ func show_game_over():
 
 
 func update_score(score):
-	$ScoreLabel.text = str(score)
+	$TimeLabel.text = "Time:" + str(score)
+	
+func update_killnum(kill_num):
+	$KillLabel.text = "Kill:" + str(kill_num)
 	
 
 func _on_start_button_pressed():
@@ -38,3 +41,5 @@ func _on_start_button_pressed():
 
 func _on_message_timer_timeout():
 	$Message.hide()
+
+

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bejngvu745f5s"]
+[gd_scene load_steps=9 format=3 uid="uid://bejngvu745f5s"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_tgts0"]
 [ext_resource type="Texture2D" uid="uid://dbg0im54gyru7" path="res://dodge_the_creeps_2d_assets/art/playerGrey_up1.png" id="1_vsvd4"]
+[ext_resource type="PackedScene" uid="uid://h3utapby152" path="res://ammo.tscn" id="2_2fnl5"]
 [ext_resource type="Texture2D" uid="uid://dvl20m12kun14" path="res://dodge_the_creeps_2d_assets/art/playerGrey_up2.png" id="2_pgo2o"]
 [ext_resource type="Texture2D" uid="uid://dyu8wqwl47jye" path="res://dodge_the_creeps_2d_assets/art/playerGrey_walk1.png" id="3_8olsf"]
 [ext_resource type="Texture2D" uid="uid://80ugrrm7toe1" path="res://dodge_the_creeps_2d_assets/art/playerGrey_walk2.png" id="4_wegg3"]
@@ -37,7 +38,9 @@ height = 66.0
 
 [node name="Player" type="Area2D"]
 position = Vector2(26, 41)
+collision_mask = 2
 script = ExtResource("1_tgts0")
+ammo_scene = ExtResource("2_2fnl5")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

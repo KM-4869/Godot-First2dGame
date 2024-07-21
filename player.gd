@@ -1,6 +1,7 @@
 extends Area2D
 signal hit
 @export var speed = 400 # pixel/second
+@export var ammo_scene: PackedScene
 var screen_size
 
 # Called when the node enters the scene tree for the first time.
@@ -37,7 +38,21 @@ func _process(delta):
 	if velocity.y != 0:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_v = velocity.y > 0
+	
+	if Input.is_action_just_pressed("shoot"):
 		
+		var ammo = ammo_scene.instantiate()
+		
+		var ammo_velocity = ( 
+			Vector2.RIGHT if $AnimatedSprite2D.animation == "walk" and not $AnimatedSprite2D.flip_h 
+			else Vector2.LEFT if $AnimatedSprite2D.animation == "walk" and $AnimatedSprite2D.flip_h
+			else Vector2.UP if $AnimatedSprite2D.animation == "up" and not $AnimatedSprite2D.flip_v
+			else Vector2.DOWN
+			)
+		#ammo.position = position
+		#ammo.linear_velocity = Vector2(0.0, 800.0) if velocity.length() == 0.0 else velocity * 2
+		ammo.shoot(position, ammo_velocity * 800.0)
+		add_sibling(ammo)
 	
 func _on_body_entered(body):
 	hide()

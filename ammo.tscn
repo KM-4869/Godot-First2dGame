@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://h3utapby152"]
+
+[ext_resource type="Texture2D" uid="uid://iy7fgo74tj7t" path="res://icon.svg" id="1_dy05n"]
+[ext_resource type="Script" path="res://ammo.gd" id="1_o8uqb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qhcei"]
+radius = 17.1172
+
+[node name="Ammo" type="Node2D"]
+script = ExtResource("1_o8uqb")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(0.500001, -1)
+scale = Vector2(0.256, 0.25)
+texture = ExtResource("1_dy05n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_qhcei")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="RigidBody2D"]
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]
+[connection signal="screen_exited" from="RigidBody2D/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
