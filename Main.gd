@@ -5,6 +5,7 @@ extends Node
 
 var score
 var kill_num
+var heart
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -14,7 +15,8 @@ func _process(delta):
 	pass
 		
 
-func gmer_over():
+func game_over():
+	$Player.hide()
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
@@ -24,11 +26,15 @@ func gmer_over():
 func new_game():
 	score = 0
 	kill_num = 0
+	heart = 3
+	
 	$Player.start($StartPosition.position)
 	$Player/AnimatedSprite2D.flip_v = false
 	$StartTimer.start()
+	
 	$HUD.update_score(score)
 	$HUD.update_killnum(kill_num)
+	$HUD.heart_changed_to(heart)
 	$HUD.show_message("Get Ready")
 	$Music.play()
 
@@ -43,11 +49,25 @@ func _on_mob_timer_timeout():
 	
 	mob.position = mob_spawn_location.position
 	
-	direction += randf_range(-PI / 4, PI / 4)
-	mob.rotation = direction
+	var mob_types = mob.get_node("AnimatedSprite2D").sprite_frames.get_animation_names()
+	mob.get_node("AnimatedSprite2D").play(mob_types[randi()%mob_types.size()])
 	
-	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
+	match mob.get_node("AnimatedSprite2D").animation:
+		"walk":		
+			direction += randf_range(-PI / 4, PI / 4)
+			mob.rotation = direction
+			var velocity = Vector2(randf_range(150.0 + score, 250.0 + score), 0.0) if score < 50 else Vector2(randf_range(200, 300), 0.0)
+			mob.linear_velocity = velocity.rotated(direction)
+		"fly":
+			direction += randf_range(-PI / 4, PI / 4)
+			mob.rotation = direction
+			var velocity = Vector2(randf_range(250.0 + score, 300.0 + score), 0.0) if score < 50 else Vector2(randf_range(300, 350), 0.0)
+			mob.linear_velocity = velocity.rotated(direction)
+		"swim":
+			var swimmob_direction = Vector2($Player.position - mob.position) 
+			mob.rotation = swimmob_direction.angle()
+			var velocity = Vector2(randf_range(150.0 + score, 250.0 + score), 0.0) if score < 50 else Vector2(randf_range(200, 300), 0.0)
+			mob.linear_velocity = velocity.rotated(swimmob_direction.angle())
 	
 	add_child(mob)
 	
@@ -60,8 +80,14 @@ func _on_score_timer_timeout():
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+		
 	
-	
+func _on_player_hit():
+	heart -= 1
+	$HUD.heart_changed_to(heart)
+	if heart == 0:
+		game_over()
+
 
 
 func _on_child_entered_tree(node):
@@ -73,7 +99,4 @@ func _on_child_entered_tree(node):
 func _on_ammo_hit_enemy():
 		kill_num += 1
 		$HUD.update_killnum(kill_num)
-
-		
-		
 		

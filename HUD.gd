@@ -1,9 +1,16 @@
 extends CanvasLayer
 signal start_game
 
+var heart
+var heart_full
+var heart_empty
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	heart = get_tree().get_nodes_in_group("heart")
+	heart_full = load("res://dodge_the_creeps_2d_assets/art/heart_full.png")
+	heart_empty = load("res://dodge_the_creeps_2d_assets/art/heart_empty.png")
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,3 +50,14 @@ func _on_message_timer_timeout():
 	$Message.hide()
 
 
+func heart_changed_to(new_heart):
+	for i in heart.size():
+		if i < new_heart:
+			heart[i].texture = heart_full
+		else:
+			heart[i].texture = heart_empty
+
+		
+	
+	
+	

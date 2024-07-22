@@ -1,10 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://h3utapby152"]
 
-[ext_resource type="Texture2D" uid="uid://iy7fgo74tj7t" path="res://icon.svg" id="1_dy05n"]
 [ext_resource type="Script" path="res://ammo.gd" id="1_o8uqb"]
+[ext_resource type="Texture2D" uid="uid://3ilo3rycaoc5" path="res://dodge_the_creeps_2d_assets/art/bullet.png" id="2_t8856"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qhcei"]
-radius = 17.1172
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hd66r"]
+radius = 7.0
+height = 46.0
 
 [node name="Ammo" type="Node2D"]
 script = ExtResource("1_o8uqb")
@@ -17,12 +18,13 @@ max_contacts_reported = 1
 contact_monitor = true
 
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
-position = Vector2(0.500001, -1)
-scale = Vector2(0.256, 0.25)
-texture = ExtResource("1_dy05n")
+position = Vector2(-1, 0)
+scale = Vector2(0.286436, 0.367857)
+texture = ExtResource("2_t8856")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CircleShape2D_qhcei")
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_hd66r")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="RigidBody2D"]
 

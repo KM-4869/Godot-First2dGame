@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c447inr0n2ma8"]
+[gd_scene load_steps=4 format=3 uid="uid://c447inr0n2ma8"]
 
 [ext_resource type="Script" path="res://HUD.gd" id="1_i4hwg"]
 [ext_resource type="FontFile" uid="uid://btw1yul70gwi4" path="res://dodge_the_creeps_2d_assets/fonts/Xolonium-Regular.ttf" id="2_4bbqg"]
+[ext_resource type="Texture2D" uid="uid://dgx34lqb3kgq0" path="res://dodge_the_creeps_2d_assets/art/heart_full.png" id="3_urqoc"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_i4hwg")
@@ -68,6 +69,23 @@ theme_override_font_sizes/font_size = 48
 text = "Kill:0"
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="heart1" type="Sprite2D" parent="." groups=["heart"]]
+position = Vector2(320, 40)
+scale = Vector2(0.12263, 0.150496)
+texture = ExtResource("3_urqoc")
+
+[node name="heart2" type="Sprite2D" parent="." groups=["heart"]]
+position = Vector2(384, 40)
+rotation = -0.00362857
+scale = Vector2(0.12263, 0.150496)
+texture = ExtResource("3_urqoc")
+
+[node name="heart3" type="Sprite2D" parent="." groups=["heart"]]
+position = Vector2(448, 40)
+rotation = -0.00362857
+scale = Vector2(0.12263, 0.150496)
+texture = ExtResource("3_urqoc")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

@@ -11,9 +11,10 @@ func _process(delta):
 	pass
 
 
-func shoot(start_position, velocity):
+func shoot(start_position, velocity, rotation):
 	position = start_position
-	$RigidBody2D.linear_velocity = Vector2(0.0, -800.0) if velocity.length() == 0.0 else velocity * 2
+	$RigidBody2D.linear_velocity = velocity
+	$RigidBody2D/Sprite2D.rotation = rotation
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

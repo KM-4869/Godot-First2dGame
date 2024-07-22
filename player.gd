@@ -51,14 +51,15 @@ func _process(delta):
 			)
 		#ammo.position = position
 		#ammo.linear_velocity = Vector2(0.0, 800.0) if velocity.length() == 0.0 else velocity * 2
-		ammo.shoot(position, ammo_velocity * 800.0)
+		ammo.shoot(position, ammo_velocity * 1600.0, ammo_velocity.angle())
+			
 		add_sibling(ammo)
 	
 func _on_body_entered(body):
-	hide()
 	hit.emit()
-	#body.hide()
-	$CollisionShape2D.set_deferred("disabled", true)
+	disable_collision(3)
+	player_blinking(3)
+
 	
 
 func start(pos):
@@ -67,26 +68,15 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+func player_blinking(second):
+	for i in int(second / 0.25):
+		await  get_tree().create_timer(0.25).timeout
+		$AnimatedSprite2D.visible = not $AnimatedSprite2D.visible
 
-
-func game_over():
-	pass # Replace with function body.
+func disable_collision(second):
+	$CollisionShape2D.set_deferred("disabled", true)
+	await  get_tree().create_timer(second).timeout
+	$CollisionShape2D.set_deferred("disabled", false)
+	
+	
+	
