@@ -44,7 +44,8 @@ func _process(delta):
 		var ammo = ammo_scene.instantiate()
 		
 		var ammo_velocity = ( 
-			Vector2.RIGHT if $AnimatedSprite2D.animation == "walk" and not $AnimatedSprite2D.flip_h 
+			velocity.normalized() if absf(velocity.x) > 0 and absf(velocity.y) > 0
+			else Vector2.RIGHT if $AnimatedSprite2D.animation == "walk" and not $AnimatedSprite2D.flip_h 
 			else Vector2.LEFT if $AnimatedSprite2D.animation == "walk" and $AnimatedSprite2D.flip_h
 			else Vector2.UP if $AnimatedSprite2D.animation == "up" and not $AnimatedSprite2D.flip_v
 			else Vector2.DOWN

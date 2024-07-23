@@ -40,6 +40,8 @@ func new_game():
 
 
 func _on_mob_timer_timeout():
+	$MobTimer.wait_time = 1 - 0.005 * score if score < 100 else 0.5
+	
 	var mob = mob_scene.instantiate()
 	
 	var mob_spawn_location = $MobPath/MobSpawnLocation
@@ -56,17 +58,17 @@ func _on_mob_timer_timeout():
 		"walk":		
 			direction += randf_range(-PI / 4, PI / 4)
 			mob.rotation = direction
-			var velocity = Vector2(randf_range(150.0 + score, 250.0 + score), 0.0) if score < 50 else Vector2(randf_range(200, 300), 0.0)
+			var velocity = Vector2(randf_range(100.0 + score * 2, 150.0 + score * 2), 0.0) if score < 100 else Vector2(randf_range(300, 350), 0.0)
 			mob.linear_velocity = velocity.rotated(direction)
 		"fly":
 			direction += randf_range(-PI / 4, PI / 4)
 			mob.rotation = direction
-			var velocity = Vector2(randf_range(250.0 + score, 300.0 + score), 0.0) if score < 50 else Vector2(randf_range(300, 350), 0.0)
+			var velocity = Vector2(randf_range(150.0 + score * 2, 200.0 + score * 2), 0.0) if score < 100 else Vector2(randf_range(350, 400), 0.0)
 			mob.linear_velocity = velocity.rotated(direction)
 		"swim":
 			var swimmob_direction = Vector2($Player.position - mob.position) 
 			mob.rotation = swimmob_direction.angle()
-			var velocity = Vector2(randf_range(150.0 + score, 250.0 + score), 0.0) if score < 50 else Vector2(randf_range(200, 300), 0.0)
+			var velocity = Vector2(randf_range(100.0 + score * 2, 150.0 + score * 2), 0.0) if score < 100 else Vector2(randf_range(300, 350), 0.0)
 			mob.linear_velocity = velocity.rotated(swimmob_direction.angle())
 	
 	add_child(mob)
