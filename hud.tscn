@@ -10,7 +10,7 @@ script = ExtResource("1_i4hwg")
 [node name="TimeLabel" type="Label" parent="."]
 anchors_preset = -1
 anchor_left = 0.00208333
-anchor_right = 0.445833
+anchor_right = 0.55
 anchor_bottom = 0.0805556
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_4bbqg")
@@ -62,7 +62,7 @@ one_shot = true
 anchors_preset = -1
 anchor_left = 0.00208333
 anchor_top = 0.0805556
-anchor_right = 0.404167
+anchor_right = 0.533333
 anchor_bottom = 0.161111
 theme_override_fonts/font = ExtResource("2_4bbqg")
 theme_override_font_sizes/font_size = 48
